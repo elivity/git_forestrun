@@ -51,8 +51,9 @@ public class PlayerController : MonoBehaviour {
 
 		tmpDistance = playerShouldPos. z;
 
-		if (tmpDistance2+200 > tmpDistance) {
-			GameStateManager.Instance.setDistance ((int)playerShouldPos.z/10);
+		if (tmpDistance2+200 <= tmpDistance) {
+			Debug.Log ((tmpDistance2 + 200) + " " + tmpDistance);
+			//GameStateManager.Instance.setDistance ((int)playerShouldPos.z/10);
 			tmpDistance2 = tmpDistance;
 		}
 		touchDetect = touchCtrl ();

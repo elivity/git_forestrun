@@ -10,10 +10,10 @@ public class ColliderScript : MonoBehaviour {
         Debug.Log("obstacle collided with: "+ collider.gameObject.tag);
 
         //Nur Collider am Skelett beachten. Nur Skelett hat "Player" tag
-        if (collider.tag == "Player")
+		if (collider.tag.Equals("Player"))
         {
             //I am Stone
-            if (gameObject.name == "colliderOfStone")
+			if (gameObject.name.Equals("colliderOfStone"))
             {
                 if (animOfPlayer.GetCurrentAnimatorStateInfo(0).IsName("Base.roll"))
                 {
