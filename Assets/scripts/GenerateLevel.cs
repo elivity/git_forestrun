@@ -21,7 +21,7 @@ public class GenerateLevel : MonoBehaviour {
 	void Start () {
 		//Übergeben der Mapstücke, Hindernisse und aufgereihten Coins
 		mapGen = new MapGenerator (prefabs, obsPrefs, coinPrefs);
-		mapGen.buildMap ();
+		mapGen.buildMap (0);
 
 		playerPos = playerObj.GetComponent<Transform> ();
 
@@ -34,9 +34,10 @@ public class GenerateLevel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		tmpPos2 = playerPos.position.z;
-		if (tmpPos + 24 <= tmpPos2) {
-			Destroy (mapGen.generatedMapTiles [dstrCnt++]);
-			tmpPos = tmpPos2;
+		if (tmpPos + 167.5199f/2 <= tmpPos2) {
+			mapGen.buildMap (tmpPos + 167.5199f);
+			//Destroy (mapGen.generatedMapTiles [dstrCnt++]);
+			tmpPos = tmpPos2+ 167.5199f/2;
 			Debug.Log ("destryed");
 		}
 
@@ -48,7 +49,7 @@ public class GenerateLevel : MonoBehaviour {
 
 class MapGenerator {
 	//wieviele mapstücke sollen generiert werden?
-	public int mapLength = 50;
+	public int mapLength = 10;
 
 	//Hier werden alle Mapstücke, die generiert wurden, gespeichert
 	public GameObject[] generatedMapTiles;
@@ -72,14 +73,14 @@ class MapGenerator {
 		laneScriptObj = new LaneScript (allLevelPrefabs[0]);
 	}
 
-	public void buildMap() {
+	public void buildMap(float whereToBuild) {
 		for(int i = 0; i < mapLength; i++){
 			
 			float prefSize = allLevelPrefabs[0].GetComponentInChildren<MeshRenderer>().bounds.size.z;
-			float posZtoGen = (float)(prefSize * (float)i);
+			float posZtoGen = (float)(whereToBuild + prefSize * (float)i);
 			generatedMapTiles[i] = GameObject.Instantiate(allLevelPrefabs[0], new Vector3(0, 0, posZtoGen), allLevelPrefabs[0].transform.rotation);
 			//Es soll nur jeden 2. Mapabschnitt ein Hinderniss generiert werden
-			if (i > 5 && i%2==0) {
+			if (i > 0 && i%3==0) {
 				int rndLane = Random.Range (0, 3);
 				int[] laneConstel = createObstacles(rndLane, posZtoGen);
 				createCoins(laneConstel, posZtoGen);

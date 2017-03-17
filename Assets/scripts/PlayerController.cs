@@ -40,13 +40,16 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	float tmpDistance = 0;
 	float tmpDistance2 = 0;
+	 	
 	void Update () {
 
         //Shadow off in air
         if (!charContr.isGrounded) {
 			gameObject.transform.GetChild (2).gameObject.SetActive (false);
 		} else {
-			gameObject.transform.GetChild (2).gameObject.SetActive (true);
+			if (!gameObject.transform.GetChild (2).gameObject.activeSelf) {
+				gameObject.transform.GetChild (2).gameObject.SetActive (true);
+			}
 		}
 
 		tmpDistance = playerShouldPos. z;
@@ -101,7 +104,7 @@ public class PlayerController : MonoBehaviour {
             playerAnimator.SetTrigger("TriggerKick");
         }
 
-        playerShouldPos.z += 2f;
+        playerShouldPos.z += 3f;
 
         //MoveCharacter
         charContr.Move(moveDirection * Time.deltaTime);
