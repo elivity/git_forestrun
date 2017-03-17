@@ -14,6 +14,6 @@ public class GuiDistanceScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		textDistance.text = GameStateManager.Instance.getDistance ().ToString();
+		//textDistance.text = GameStateManager.Instance.getDistance ().ToString();
 	}
 }

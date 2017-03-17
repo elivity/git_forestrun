@@ -12,7 +12,8 @@ public class GenerateLevel : MonoBehaviour {
 	public GameObject[] coinPrefs;
 	//Das Mapgenerator-Objekt
 	MapGenerator mapGen;
-	Vector3 playerPos;
+	public GameObject playerObj;
+	Transform playerPos;
 
 
 
@@ -22,14 +23,23 @@ public class GenerateLevel : MonoBehaviour {
 		mapGen = new MapGenerator (prefabs, obsPrefs, coinPrefs);
 		mapGen.buildMap ();
 
+		playerPos = playerObj.GetComponent<Transform> ();
+
 
 	}
 	
+	float tmpPos = 0;
+	float tmpPos2 = 0;
+	int dstrCnt = 0;
 	// Update is called once per frame
 	void Update () {
-		if (playerPos.z > 5) {
-			
+		tmpPos2 = playerPos.position.z;
+		if (tmpPos + 24 <= tmpPos2) {
+			Destroy (mapGen.generatedMapTiles [dstrCnt++]);
+			tmpPos = tmpPos2;
+			Debug.Log ("destryed");
 		}
+
 	}
 
 
@@ -38,10 +48,10 @@ public class GenerateLevel : MonoBehaviour {
 
 class MapGenerator {
 	//wieviele mapstücke sollen generiert werden?
-	public int mapLength = 100;
+	public int mapLength = 50;
 
 	//Hier werden alle Mapstücke, die generiert wurden, gespeichert
-	GameObject[] generatedMapTiles;
+	public GameObject[] generatedMapTiles;
 	//Hier werden die übergebenen Mapstücke gespeichert
 	GameObject[] allLevelPrefabs;
 	//Hier werden die übergebenen Hindernisse gespeichert
