@@ -32,13 +32,15 @@ public class GenerateLevel : MonoBehaviour {
 	float tmpPos2 = 0;
 	int dstrCnt = 0;
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		tmpPos2 = playerPos.position.z;
 		if (tmpPos + 167.5199f/2 <= tmpPos2) {
 			mapGen.buildMap (tmpPos + 167.5199f);
 			//Destroy (mapGen.generatedMapTiles [dstrCnt++]);
 			tmpPos = tmpPos2+ 167.5199f/2;
 			Debug.Log ("destryed");
+
+			mapGen.destroyElementsAt (playerPos.position.z-10);
 		}
 
 	}
@@ -53,6 +55,8 @@ class MapGenerator {
 
 	//Hier werden alle Mapstücke, die generiert wurden, gespeichert
 	public GameObject[] generatedMapTiles;
+	//Hier werden alle hindernisse, die generiert wurden, gespeichert
+	public List<GameObject> generatedObstacles;
 	//Hier werden die übergebenen Mapstücke gespeichert
 	GameObject[] allLevelPrefabs;
 	//Hier werden die übergebenen Hindernisse gespeichert
@@ -69,13 +73,15 @@ class MapGenerator {
 		allObstaclePrefabs = gotAllObsctaclesPrefs;
 		allCoinPrefabs = gotAllCoinPrefabs;
 		generatedMapTiles = new GameObject[mapLength];
+		generatedObstacles = new List<GameObject> ();
 
 		laneScriptObj = new LaneScript (allLevelPrefabs[0]);
 	}
 
 	public void buildMap(float whereToBuild) {
+
+
 		for(int i = 0; i < mapLength; i++){
-			
 			float prefSize = allLevelPrefabs[0].GetComponentInChildren<MeshRenderer>().bounds.size.z;
 			float posZtoGen = (float)(whereToBuild + prefSize * (float)i);
 			generatedMapTiles[i] = GameObject.Instantiate(allLevelPrefabs[0], new Vector3(0, 0, posZtoGen), allLevelPrefabs[0].transform.rotation);
@@ -87,7 +93,7 @@ class MapGenerator {
 			}
 
 		}
-			
+
 	}
 
 	//Hier wird die Bahn und die z-Position wo die Coins generiert werden sollen übergeben...ist noch etwas buggy bzw. unübersichtlich
@@ -100,10 +106,10 @@ class MapGenerator {
 		}
 		int rndCoinLane = Random.Range (0, tmpList.Count);
 		if (laneConstel [rndCoinLane] == 1 || laneConstel [rndCoinLane] == -1) {
-			GameObject.Instantiate (allCoinPrefabs [1], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, pos), allCoinPrefabs [1].transform.rotation);
+			generatedObstacles.Add(GameObject.Instantiate (allCoinPrefabs [1], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, pos), allCoinPrefabs [1].transform.rotation));
 
 		} else if(laneConstel [rndCoinLane] != 0) {
-			GameObject.Instantiate (allCoinPrefabs [0], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, pos), allCoinPrefabs [0].transform.rotation);
+			generatedObstacles.Add(GameObject.Instantiate (allCoinPrefabs [0], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, pos), allCoinPrefabs [0].transform.rotation));
 
 		}
 	}
@@ -119,13 +125,13 @@ class MapGenerator {
 			for (int i = 0; i < 4; i++) { // 3 mal 'Stamm3' erzeugen
 				
 				if (i != whichLane) {
-					GameObject.Instantiate (allObstaclePrefabs [0], new Vector3 (laneScriptObj.lanesX [i], 0f, pos), allObstaclePrefabs [0].transform.rotation);	
+					generatedObstacles.Add(GameObject.Instantiate (allObstaclePrefabs [0], new Vector3 (laneScriptObj.lanesX [i], 0f, pos), allObstaclePrefabs [0].transform.rotation));	
 					laneConstellation [i] = 0;
 				} else {
 					laneConstellation [i] = 1;
 				}
 			}
-			GameObject.Instantiate (obs, new Vector3 (laneScriptObj.lanesX [whichLane], 0f, pos), obs.transform.rotation);
+			generatedObstacles.Add(GameObject.Instantiate (obs, new Vector3 (laneScriptObj.lanesX [whichLane], 0f, pos), obs.transform.rotation));
 
 
 		} else if(whichObsOnFreeLane > 1) {  //alles ausser 'Stamm3' und 'slide'
@@ -134,14 +140,14 @@ class MapGenerator {
 					int whichObsOnOccLane = Random.Range (-1, 6);
 					if (whichObsOnOccLane != -1) {
 						GameObject obsOcc = allObstaclePrefabs [whichObsOnOccLane];
-						GameObject.Instantiate (obsOcc, new Vector3 (laneScriptObj.lanesX [i], 0f, pos), obsOcc.transform.rotation);
+						generatedObstacles.Add(GameObject.Instantiate (obsOcc, new Vector3 (laneScriptObj.lanesX [i], 0f, pos), obsOcc.transform.rotation));
 
 						laneConstellation [i] = whichObsOnOccLane;
 					}
 				} else {
 					int whichObsOnOccLane = Random.Range (1, 6);
 					GameObject obsOcc = allObstaclePrefabs [whichObsOnOccLane];
-					GameObject.Instantiate (obsOcc, new Vector3 (laneScriptObj.lanesX [i],0f, pos), obsOcc.transform.rotation);
+					generatedObstacles.Add(GameObject.Instantiate (obsOcc, new Vector3 (laneScriptObj.lanesX [i],0f, pos), obsOcc.transform.rotation));
 
 					laneConstellation [i] = whichObsOnOccLane;
 				}
@@ -150,6 +156,21 @@ class MapGenerator {
 		}
 
 		return laneConstellation;
+	}
+
+	public void destroyElementsAt(float whereToDestroy) {
+		GameObject[] tmpFPs = GameObject.FindGameObjectsWithTag ("ForestPart");
+		for (int j = 0; j < tmpFPs.Length; j++) {
+			if(tmpFPs[j].transform.position.z < whereToDestroy) {
+				GameObject.Destroy (tmpFPs[j]);
+			}
+		}
+		for(int j=0; j<generatedObstacles.Count;j++) {
+			if(generatedObstacles[j].transform.position.z < whereToDestroy) {
+				GameObject.Destroy (generatedObstacles[j]);
+				generatedObstacles.RemoveAt (j);
+			}
+		}
 	}
 }
 
