@@ -34,10 +34,10 @@ public class GenerateLevel : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		tmpPos2 = playerPos.position.z;
-		if (tmpPos + 167.5199f/2 <= tmpPos2) {
-			mapGen.buildMap (tmpPos + 167.5199f);
+		if (tmpPos + 167.5199f/4 <= tmpPos2) {
+			mapGen.buildMap (tmpPos + 167.5199f/2);
 			//Destroy (mapGen.generatedMapTiles [dstrCnt++]);
-			tmpPos = tmpPos2+ 167.5199f/2;
+			tmpPos = tmpPos2+ 167.5199f/4;
 			Debug.Log ("destryed");
 
 			mapGen.destroyElementsAt (playerPos.position.z-10);
@@ -51,7 +51,7 @@ public class GenerateLevel : MonoBehaviour {
 
 class MapGenerator {
 	//wieviele mapstücke sollen generiert werden?
-	public int mapLength = 10;
+	public int mapLength = 5;
 
 	//Hier werden alle Mapstücke, die generiert wurden, gespeichert
 	public GameObject[] generatedMapTiles;
