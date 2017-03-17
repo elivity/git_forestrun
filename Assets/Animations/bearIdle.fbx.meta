@@ -1,0 +1,141 @@
+fileFormatVersion: 2
+guid: 0fb4eceaef612ee479d80411ff114428
+timeCreated: 1488764470
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: hip
+    100004: neckHead
+    100006: neckHead_end
+    100008: neckHead_end_end
+    100010: bearFertig22
+    100012: BearSkelett22
+    400000: //RootNode
+    400002: hip
+    400004: neckHead
+    400006: neckHead_end
+    400008: neckHead_end_end
+    400010: bearFertig22
+    400012: BearSkelett22
+    4300000: bearFertig22
+    7400000: bearIdle
+    7400002: BearSkelett22|BearSkelett22|BearSkelett22|Armature.000Action.001|BearSkelett2
+    7400004: BearSkelett22|BearSkelett22|BearSkelett22|BearSkellet11.001|BearSkellet11.000
+    7400006: BearSkelett22|BearSkelett22|BearSkelett22|BearSkellet11.001|BearSkellet11|Arm
+    7400008: BearSkelett22|BearSkelett22|BearSkelett22|BearSkellet11.001|BearSkellet11|coi
+    7400010: BearSkelett22|BearSkelett22|BearSkelett22|BearSkellet11.001|BearSkellet11|Nur
+    7400012: BearSkelett22|BearSkelett22|BearSkelett22|coinBone4Action|BearSkelett22|coinB
+    9500000: //RootNode
+    13700000: bearFertig22
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: bearIdle
+      takeName: BearSkelett22|bearIdle
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bearFertig22
+        weight: 1
+      - path: BearSkelett22
+        weight: 1
+      - path: BearSkelett22/hip
+        weight: 1
+      - path: BearSkelett22/hip/neckHead
+        weight: 1
+      - path: BearSkelett22/hip/neckHead/neckHead_end
+        weight: 1
+      - path: BearSkelett22/hip/neckHead/neckHead_end/neckHead_end_end
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
