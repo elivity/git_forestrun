@@ -94,7 +94,7 @@ class MapGenerator {
 		if (prefCnt%3==0) {
 			int rndLane = Random.Range (0, 3);
 			int[] laneConstel = createObstacles(rndLane, generatedMapTiles[genMapLast].transform.position.z);
-			createCoins(laneConstel, generatedMapTiles[9].transform.position.z);
+			createCoins(laneConstel, generatedMapTiles[genMapLast].transform.position.z);
 		}
 
 	}
