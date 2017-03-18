@@ -117,20 +117,23 @@ class MapGenerator {
 
 	}
 
-	//Hier wird die Bahn und die z-Position wo die Coins generiert werden sollen übergeben...ist noch etwas buggy bzw. unübersichtlich
-	public void createCoins(int[] laneConstel, float pos) {
+	//Hier wird die Bahn und die z-Position wo die Coins generiert werden sollen übergeben..
+	//laneConstel ist zb [0,-1,3,2] - [Stamm3, frei, stamm2, stein] - posZ: an welcher z-position sollen die coins generiert werden
+	public void createCoins(int[] laneConstel, float posZ) {
+		//tmpList sammelt den INDEX von laneConstel aller nicht-ausschluss-felder also alles ausser 0 (Stamm3) und 4(bär)
 		List<int> tmpList = new List<int>();
 		for (int i = 0; i < laneConstel.Length; i++) {
-			if (laneConstel [i] > 0 && laneConstel[i] < 4) {
+			if (laneConstel [i] != 0 && laneConstel[i] < 4) {
 				tmpList.Add (i);
 			}
 		}
+		//Zieht eine zufällige überquerbare lane
 		int rndCoinLane = Random.Range (0, tmpList.Count);
+		//je nach dem ob man für ein Hindernis springen muss oder nicht, wird eine kurvige oder gerade Coinspur generiert
 		if (laneConstel [rndCoinLane] == 1 || laneConstel [rndCoinLane] == -1) {
-			generatedObstacles.Add(GameObject.Instantiate (allCoinPrefabs [1], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, pos), allCoinPrefabs [1].transform.rotation));
-
+			generatedObstacles.Add(GameObject.Instantiate (allCoinPrefabs [1], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, posZ), allCoinPrefabs [1].transform.rotation));
 		} else if(laneConstel [rndCoinLane] != 0) {
-			generatedObstacles.Add(GameObject.Instantiate (allCoinPrefabs [0], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, pos), allCoinPrefabs [0].transform.rotation));
+			generatedObstacles.Add(GameObject.Instantiate (allCoinPrefabs [0], new Vector3 (laneScriptObj.lanesX [rndCoinLane], 0, posZ), allCoinPrefabs [0].transform.rotation));
 
 		}
 	}
