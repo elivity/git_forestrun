@@ -80,6 +80,7 @@ class MapGenerator {
 		laneScriptObj = new LaneScript (allLevelPrefabs[0]);
 	}
 
+	//Dynamische zerstörung und Generierung von Map und Hindernissen
 	public void buildMapNext(float whereToBuild) {
 		prefCnt++;
 		destroyElementsAt (whereToBuild);
@@ -99,6 +100,7 @@ class MapGenerator {
 
 	}
 
+	//Zum ersten generieren des Levels in Start()
 	public void buildMap(float whereToBuild) {
 
 
