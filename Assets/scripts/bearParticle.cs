@@ -17,6 +17,6 @@ public class bearParticle : MonoBehaviour {
         Destroy(clone, 1.5f);
 
         //will also destroy all children (ex. the first particle we parented to this object in 'bearScript.cs') 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

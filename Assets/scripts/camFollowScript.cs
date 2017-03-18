@@ -24,7 +24,7 @@ public class camFollowScript : MonoBehaviour {
         }
 
         transform.position = Vector3.Lerp(transform.position,
-            new Vector3(x,playerTransform.position.y+8,playerTransform.position.z-9), camMoveSpeed*Time.deltaTime);
+            new Vector3(x,playerTransform.position.y+8,playerTransform.position.z-7), camMoveSpeed*Time.deltaTime);
 	}
 
 }
