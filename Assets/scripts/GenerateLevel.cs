@@ -34,13 +34,14 @@ public class GenerateLevel : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		tmpPos2 = playerPos.position.z;
-		if (tmpPos + 167.5199f/4 <= tmpPos2) {
-			mapGen.buildMap (tmpPos + 167.5199f/2);
+		if (tmpPos2 >= mapGen.generatedMapTiles[5].transform.position.z) {
+			//mapGen.buildMap (tmpPos + 167.5199f/2);
+			mapGen.buildMapNext (tmpPos2-32);
 			//Destroy (mapGen.generatedMapTiles [dstrCnt++]);
-			tmpPos = tmpPos2+ 167.5199f/4;
+			tmpPos = tmpPos2+ 16.71599f;
 			Debug.Log ("destryed");
 
-			mapGen.destroyElementsAt (playerPos.position.z-10);
+			//mapGen.destroyElementsAt (playerPos.position.z-10);
 		}
 
 	}
@@ -51,10 +52,10 @@ public class GenerateLevel : MonoBehaviour {
 
 class MapGenerator {
 	//wieviele mapstücke sollen generiert werden?
-	public int mapLength = 5;
+	public int mapLength = 15;
 
 	//Hier werden alle Mapstücke, die generiert wurden, gespeichert
-	public GameObject[] generatedMapTiles;
+	public List<GameObject> generatedMapTiles;
 	//Hier werden alle hindernisse, die generiert wurden, gespeichert
 	public List<GameObject> generatedObstacles;
 	//Hier werden die übergebenen Mapstücke gespeichert
@@ -67,15 +68,35 @@ class MapGenerator {
 	//Spur der Spieler sein soll, wenn z.B. laneScriptObj.SwitchLaneLeft ausgeführt wird
 	public LaneScript laneScriptObj;
 
+	int prefCnt = 0;
 	//Init
 	public MapGenerator(GameObject[] gotAllLevelPrefabs, GameObject[] gotAllObsctaclesPrefs, GameObject[] gotAllCoinPrefabs) {
 		allLevelPrefabs = gotAllLevelPrefabs;
 		allObstaclePrefabs = gotAllObsctaclesPrefs;
 		allCoinPrefabs = gotAllCoinPrefabs;
-		generatedMapTiles = new GameObject[mapLength];
+		generatedMapTiles = new List<GameObject> ();
 		generatedObstacles = new List<GameObject> ();
 
 		laneScriptObj = new LaneScript (allLevelPrefabs[0]);
+	}
+
+	public void buildMapNext(float whereToBuild) {
+		prefCnt++;
+		destroyElementsAt (whereToBuild);
+		GameObject.Destroy (generatedMapTiles[0]);
+		generatedMapTiles.RemoveAt (0);
+		float prefSize = allLevelPrefabs[0].GetComponentInChildren<MeshRenderer>().bounds.size.z;
+
+		int genMapLast = generatedMapTiles.Count - 1;
+		generatedMapTiles.Add(GameObject.Instantiate(allLevelPrefabs[0], new Vector3(0, 0, generatedMapTiles[genMapLast].transform.position.z+prefSize), allLevelPrefabs[0].transform.rotation));
+		Debug.Log ("gennr" + generatedMapTiles.Count);
+		//Es soll nur jeden 2. Mapabschnitt ein Hinderniss generiert werden
+		if (prefCnt%3==0) {
+			int rndLane = Random.Range (0, 3);
+			int[] laneConstel = createObstacles(rndLane, generatedMapTiles[genMapLast].transform.position.z);
+			createCoins(laneConstel, generatedMapTiles[9].transform.position.z);
+		}
+
 	}
 
 	public void buildMap(float whereToBuild) {
@@ -84,7 +105,7 @@ class MapGenerator {
 		for(int i = 0; i < mapLength; i++){
 			float prefSize = allLevelPrefabs[0].GetComponentInChildren<MeshRenderer>().bounds.size.z;
 			float posZtoGen = (float)(whereToBuild + prefSize * (float)i);
-			generatedMapTiles[i] = GameObject.Instantiate(allLevelPrefabs[0], new Vector3(0, 0, posZtoGen), allLevelPrefabs[0].transform.rotation);
+			generatedMapTiles.Add(GameObject.Instantiate(allLevelPrefabs[0], new Vector3(0, 0, posZtoGen), allLevelPrefabs[0].transform.rotation));
 			//Es soll nur jeden 2. Mapabschnitt ein Hinderniss generiert werden
 			if (i > 0 && i%3==0) {
 				int rndLane = Random.Range (0, 3);
@@ -159,12 +180,13 @@ class MapGenerator {
 	}
 
 	public void destroyElementsAt(float whereToDestroy) {
-		GameObject[] tmpFPs = GameObject.FindGameObjectsWithTag ("ForestPart");
+		/*GameObject[] tmpFPs = GameObject.FindGameObjectsWithTag ("ForestPart");
 		for (int j = 0; j < tmpFPs.Length; j++) {
-			if(tmpFPs[j].transform.position.z < whereToDestroy) {
+			if(j == whereToDestroy) {
 				GameObject.Destroy (tmpFPs[j]);
+				generatedMapTiles.RemoveAt (j);
 			}
-		}
+		}*/
 		for(int j=0; j<generatedObstacles.Count;j++) {
 			if(generatedObstacles[j].transform.position.z < whereToDestroy) {
 				GameObject.Destroy (generatedObstacles[j]);
