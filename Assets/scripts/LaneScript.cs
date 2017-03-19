@@ -16,9 +16,9 @@ public class LaneScript {
 	}
 
 	public float[] calcLanesMiddles(float trackPosX, float trackWidth) {
-		float laneWidth = trackWidth / 8;
+		float laneWidth = 3.75f;
 		float laneMedian = laneWidth / 2;
-		float startTrack = (trackWidth / 4);
+		float startTrack = 2.5f;  //Alle Lanes komplett verschieben
 		float[] arr = new float[4];
 		arr [0] = trackPosX-startTrack + laneMedian;
 		arr [1] = trackPosX-startTrack + 1*laneWidth + laneMedian;
