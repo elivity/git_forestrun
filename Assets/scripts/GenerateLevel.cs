@@ -194,6 +194,7 @@ class MapGenerator {
 		}*/
 		for(int j=0; j<generatedObstacles.Count;j++) {
 			if(generatedObstacles[j].transform.position.z < whereToDestroy) {
+				
 				GameObject.Destroy (generatedObstacles[j]);
 				generatedObstacles.RemoveAt (j);
 			}
