@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7ed414e8d94e11549b069c7097a82c51
-timeCreated: 1490633262
+guid: d09b4fd13b42f5c45b1763b06b2ef97d
+timeCreated: 1490635893
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -31,7 +31,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -53,7 +53,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
