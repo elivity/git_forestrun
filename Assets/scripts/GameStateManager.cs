@@ -16,7 +16,7 @@ public class GameStateManager : MonoBehaviour {
 	private static string activeLevel;
 	private static int highScore = 0;
     private static int lifes = 3;
-	private static float speed = 2;
+	private static float speed = 0;
 	private static bool cankick = true;
 	private static GameObject teddyToKick;
 	private static int coinsCollected = 0;

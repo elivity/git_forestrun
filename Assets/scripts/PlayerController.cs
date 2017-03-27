@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 	
 	Animator playerAnimator;
 	CharacterController charContr;
-	public float speed;
+	public float speed = 0f;
     public float gravity = 20;
 	public GameObject mapPrefab;
     int frameCounter = 0;
@@ -31,18 +31,18 @@ public class PlayerController : MonoBehaviour {
 
 		laneScriptObj = new LaneScript (mapPrefab);
 		playerShouldPos.x = laneScriptObj.switchLaneRight ();
-
+		speed = 0f;
         moveDirection = Vector3.forward * speed;
 
     }
 
-	short touchDetect=0;
+short touchDetect=0;
 	// Update is called once per frame
 	float tmpDistance = 0;
 	float tmpDistance2 = 0;
 	 	
 	void Update () {
-
+		moveDirection = Vector3.forward * speed;
         //Shadow off in air
         if (!charContr.isGrounded) {
 			gameObject.transform.GetChild (2).gameObject.SetActive (false);
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour {
             playerAnimator.SetTrigger("TriggerKick");
         }
 
-        playerShouldPos.z += 3f;
+        //playerShouldPos.z += speed;
 
         //MoveCharacter
         charContr.Move(moveDirection * Time.deltaTime);
@@ -240,6 +240,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 
-
+	void scaredAnimEnded() {
+		speed = 3f;
+	}
 
 }
